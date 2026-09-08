@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome (아이콘) -->ß
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+  />
+
+  <!-- 외부 CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ========== HEADER / NAV ========== -->
+  <header class="header" id="header">
+    <nav class="nav">
+
+      <!-- 로고 -->
+      <a href="#hero" class="nav__logo">MyPortfolio</a>
+
+      <!-- 햄버거 버튼 (모바일) -->
+      <button class="nav__hamburger" id="hamburgerBtn" aria-label="메뉴 열기">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- 메뉴 -->
+      <ul class="nav__menu" id="navMenu">
+        <li><a href="#about"   class="nav__link">About</a></li>
+        <li><a href="#skills"  class="nav__link">Skills</a></li>
+        <li><a href="#projects"class="nav__link">Projects</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+      </ul>
+
+      <!-- 다크모드 토글 -->
+      <button class="nav__theme-toggle" id="themeToggle" aria-label="테마 변경">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+      <div class="hero__content">
+        <p class="hero__greeting">안녕하세요 👋</p>
+        <h1 class="hero__title">
+          저는 <span class="hero__name">홍길동</span>입니다
+        </h1>
+        <!-- 보너스: 타이핑 효과 들어갈 자리 -->
+        <p class="hero__subtitle" id="typingText">웹 개발자</p>
+        <div class="hero__buttons">
+          <a href="#projects" class="btn btn--primary">프로젝트 보기</a>
+          <a href="#contact"  class="btn btn--outline">연락하기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="about section" id="about">
+      <div class="container">
+        <h2 class="section__title">About Me</h2>
+        <div class="about__content">
+          <div class="about__image-wrap">
+            <img
+              src="images/profile.jpg"
+              alt="홍길동 프로필 사진"
+              class="about__image"
+            />
+          </div>
+          <div class="about__text">
+            <p>안녕하세요! 저는 웹 개발에 열정을 가진 개발자입니다.</p>
+            <p>사용자 경험을 중시하며, 깔끔한 코드를 작성하려고 노력합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SKILLS ========== -->
+    <section class="skills section" id="skills">
+      <div class="container">
+        <h2 class="section__title">Skills</h2>
+        <ul class="skills__list">
+          <li class="skills__item">
+            <i class="fa-brands fa-html5"></i>
+            <span>HTML5</span>
+          </li>
+          <li class="skills__item">
+            <i class="fa-brands fa-css3-alt"></i>
+            <span>CSS3</span>
+          </li>
+          <li class="skills__item">
+            <i class="fa-brands fa-js"></i>
+            <span>JavaScript</span>
+          </li>
+          <li class="skills__item">
+            <i class="fa-brands fa-git-alt"></i>
+            <span>Git</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== PROJECTS ========== -->
+    <section class="projects section" id="projects">
+      <div class="container">
+        <h2 class="section__title">Projects</h2>
+
+        <!-- 보너스: 필터 버튼 들어갈 자리 -->
+        <div class="projects__filters" id="projectFilters"></div>
+
+        <!-- API 상태 UI (JS가 여기를 채움) -->
+        <div class="projects__status" id="projectsStatus"></div>
+
+        <!-- 카드 렌더링 영역 -->
+        <div class="projects__grid" id="projectsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="contact section" id="contact">
+      <div class="container">
+        <h2 class="section__title">Contact</h2>
+        <form class="contact__form" id="contactForm" novalidate>
+
+          <div class="form__group">
+            <label for="userName">이름 *</label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              placeholder="이름을 입력하세요"
+              autocomplete="name"
+            />
+            <span class="form__error" id="userNameError"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="userEmail">이메일 *</label>
+            <input
+              type="email"
+              id="userEmail"
+              name="userEmail"
+              placeholder="이메일을 입력하세요"
+              autocomplete="email"
+            />
+            <span class="form__error" id="userEmailError"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="userMessage">메시지 *</label>
+            <textarea
+              id="userMessage"
+              name="userMessage"
+              rows="5"
+              placeholder="메시지를 입력하세요"
+            ></textarea>
+            <span class="form__error" id="userMessageError"></span>
+          </div>
+
+          <button type="submit" class="btn btn--primary">
+            보내기 <i class="fa-solid fa-paper-plane"></i>
+          </button>
+
+          <!-- 제출 성공 메시지 -->
+          <p class="form__success" id="formSuccess" hidden>
+            ✅ 메시지가 전송되었습니다! 감사합니다.
+          </p>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">&copy; 2026 홍길동. All rights reserved.</p>
+      <ul class="footer__links">
+        <li>
+          <a href="https://github.com/본인아이디" target="_blank" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- ========== 스크롤 탑 버튼 ========== -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- JavaScript (defer로 연결) -->
+  <script src="js/main.js" defer></script>
+
+</body>
+</html>
