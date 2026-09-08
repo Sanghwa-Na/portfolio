@@ -12,7 +12,7 @@
     rel="stylesheet"
   />
 
-  <!-- Font Awesome (아이콘) -->ß
+  <!-- Font Awesome (아이콘) -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -23,7 +23,7 @@
 </head>
 
 <body>
-
+ 
   <!-- ========== HEADER / NAV ========== -->
   <header class="header" id="header">
     <nav class="nav">
@@ -32,7 +32,7 @@
       <a href="#hero" class="nav__logo">MyPortfolio</a>
 
       <!-- 햄버거 버튼 (모바일) -->
-      <button class="nav__hamburger" id="hamburgerBtn" aria-label="메뉴 열기">
+      <button class="nav__hamburger" id="hamburgerBtn" aria-label="메뉴 열기" aria-controls="navMenu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
@@ -150,7 +150,7 @@
             />
             <span class="form__error" id="userNameError"></span>
           </div>
-
+ 
           <div class="form__group">
             <label for="userEmail">이메일 *</label>
             <input

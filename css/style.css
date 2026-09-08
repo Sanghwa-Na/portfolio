@@ -284,7 +284,7 @@ button {
 
 /* 햄버거 버튼 (모바일에서만 보임) */
 .nav__hamburger {
-  display: none;                  /* 기본: 숨김 */
+  display: flex;                  /* 기본: 숨김 */
   flex-direction: column;
   justify-content: space-between;
   width: 28px;
@@ -446,6 +446,7 @@ button {
    ================================================ */
 
    /* ── 모바일 기본 ── */
+/* ── 모바일 기본 ── */
 .nav__hamburger {
   display: flex;          /* 모바일에서만 보임 */
   flex-direction: column;
@@ -632,3 +633,50 @@ button {
   }
 }
 
+
+/* ── 4단계 ── */
+
+/* Nav 스크롤 시 그림자 */
+.header.scrolled {
+  box-shadow: 0 2px 20px var(--color-shadow);
+}
+
+/* ================================================
+   스크롤 탑 버튼
+   ================================================ */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px var(--color-shadow);
+  z-index: 999;
+  cursor: pointer;
+  border: none;
+
+  /* 기본: 숨김 */
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all var(--transition);
+}
+
+/* 보일 때 */
+.scroll-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scroll-top:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-4px);
+}
