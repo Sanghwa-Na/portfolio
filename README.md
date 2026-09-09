@@ -17,9 +17,9 @@
 
 ## 📸 미리보기
 
-| 라이트 모드 | 다크 모드 |
+|  라이트 모드  |  다크 모드  |
 |:-----------:|:---------:|
-| ![light](screenshots/light.png) | ![dark](screenshots/dark.png) |
+| ![light] ☀️ | ![dark] 🌙 |
 
 ---
 
@@ -46,13 +46,9 @@ portfolio/
 ├── css/
 │   └── style.css       # 전체 스타일
 ├── js/
-│   └── main.js         # 전체 스크립트
-├── assets/
-│   └── images/         # 이미지 파일
-├── screenshots/
-│   ├── light.png       # 라이트 모드 미리보기
-│   └── dark.png        # 다크 모드 미리보기
-└── .github/            # GitHub 설정 (선택 사항)
+└── └── main.js         # 전체 스크립트
+
+
 ```
 
 ---
