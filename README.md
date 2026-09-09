@@ -39,7 +39,7 @@
 
 ## 🗂️ 폴더 구조
 
-\`\`\`
+```text
 portfolio/
 ├── index.html          # 메인 HTML
 ├── README.md           # 프로젝트 설명
@@ -47,9 +47,13 @@ portfolio/
 │   └── style.css       # 전체 스타일
 ├── js/
 │   └── main.js         # 전체 스크립트
-└── assets/
-    └── images/         # 이미지 파일
-\`\`\`
+├── assets/
+│   └── images/         # 이미지 파일
+├── screenshots/
+│   ├── light.png       # 라이트 모드 미리보기
+│   └── dark.png        # 다크 모드 미리보기
+└── .github/            # GitHub 설정 (선택 사항)
+```
 
 ---
 
@@ -82,7 +86,7 @@ portfolio/
 
 - CSS 변수를 활용한 테마 시스템 구현
 - Intersection Observer API로 성능 최적화
-- GitHub REST API 비동기 처리 및 에러 핸들링
+- GitHub REST API 비동기 처리 및 에러 핸들링 
 - 접근성(a11y)을 고려한 웹 개발
 
 ---
