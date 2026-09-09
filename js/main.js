@@ -1,90 +1,79 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
+/* ===========================
+   1. 요소 선택
+=========================== */
+const header      = document.getElementById('header');
+const hamburger   = document.getElementById('hamburger');
+const navMenu     = document.getElementById('nav-menu');
+const themeToggle = document.getElementById('theme-toggle');
+const navLinks    = document.querySelectorAll('.nav__link');
+const sections    = document.querySelectorAll('section[id]');
 
-  if (hamburgerBtn && navMenu) {
-    // accessibility
-    if (!hamburgerBtn.hasAttribute('aria-controls')) hamburgerBtn.setAttribute('aria-controls', 'navMenu');
-    if (!hamburgerBtn.hasAttribute('aria-expanded')) hamburgerBtn.setAttribute('aria-expanded', 'false');
+/* ===========================
+   2. 햄버거 메뉴
+=========================== */
+hamburger.addEventListener('click', () => {
+  const isOpen = navMenu.classList.toggle('open');
+  hamburger.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
+  hamburger.textContent = isOpen ? '✕' : '☰';
+});
 
-    const openMenu = () => {
-      navMenu.classList.add('open');
-      hamburgerBtn.classList.add('active');
-      hamburgerBtn.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    };
-
-    const closeMenu = () => {
-      navMenu.classList.remove('open');
-      hamburgerBtn.classList.remove('active');
-      hamburgerBtn.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    };
- 
-    hamburgerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (navMenu.classList.contains('open')) closeMenu();
-      else openMenu();
-    });
-
-    navMenu.querySelectorAll('.nav__link').forEach(link => {
-      link.addEventListener('click', () => closeMenu());
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navMenu.classList.contains('open')) closeMenu();
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!navMenu.classList.contains('open')) return;
-      if (e.target.closest('#navMenu')) return;
-      if (e.target.closest('#hamburgerBtn')) return;
-      closeMenu();
-    });
-  }
- 
-  // 다크모드 토글 (localStorage 저장)
-  const themeToggleBtn = document.getElementById('themeToggle');
-  const root = document.documentElement; // <html>
-
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  root.setAttribute('data-theme', savedTheme);
-
-  function updateThemeIcon(theme) {
-    if (!themeToggleBtn) return;
-    themeToggleBtn.innerHTML = theme === 'dark' ? '<i class="fa-solid fa-sun"></i>' : '<i class="fa-solid fa-moon"></i>';
-  }
-
-  updateThemeIcon(savedTheme);
-
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      updateThemeIcon(next);
-    });
-  }
-
-  // 스크롤 이벤트 (Nav 그림자, 스크롤 탑 버튼)
-  const header = document.getElementById('header');
-  const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (header) {
-      if (scrollY > 50) header.classList.add('scrolled');
-      else header.classList.remove('scrolled');
-    }
-    if (scrollTopBtn) {
-      if (scrollY > 300) scrollTopBtn.classList.add('visible');
-      else scrollTopBtn.classList.remove('visible');
-    }
+// 링크 클릭 시 메뉴 닫기
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    hamburger.textContent = '☰';
+    hamburger.setAttribute('aria-label', '메뉴 열기');
   });
+});
 
-  if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+// 메뉴 바깥 클릭 시 닫기
+document.addEventListener('click', (e) => {
+  if (!header.contains(e.target)) {
+    navMenu.classList.remove('open');
+    hamburger.textContent = '☰';
+    hamburger.setAttribute('aria-label', '메뉴 열기');
   }
 });
 
+/* ===========================
+   3. 다크모드
+=========================== */
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const next    = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+});
+
+/* ===========================
+   4. 스크롤 이벤트
+=========================== */
+const HEADER_HEIGHT = 64; // CSS --header-height 값과 동일하게
+
+const onScroll = () => {
+  // 헤더 그림자
+  header.classList.toggle('scrolled', window.scrollY > 10);
+
+  // 활성 네비 링크
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - HEADER_HEIGHT - 20;
+    if (window.scrollY >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
+  });
+};
+
+window.addEventListener('scroll', onScroll, { passive: true });
