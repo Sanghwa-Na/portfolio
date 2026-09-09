@@ -208,3 +208,201 @@ async function fetchGithubRepos() {
 
 // 페이지 로드 시 자동 실행
 fetchGithubRepos();
+
+/* ===========================
+   6. 폼 유효성 검사
+=========================== */
+const contactForm = document.getElementById('contact-form');
+
+const nameInput    = document.getElementById('name');
+const emailInput   = document.getElementById('email');
+const messageInput = document.getElementById('message');
+
+const nameError    = document.getElementById('name-error');
+const emailError   = document.getElementById('email-error');
+const messageError = document.getElementById('message-error');
+
+/* ---------- 검사 규칙 ---------- */
+const validators = {
+
+  // 이름: 2자 이상 20자 이하
+  name: (value) => {
+    if (!value.trim()) return '이름을 입력해주세요.';
+    if (value.trim().length < 2) return '이름은 2자 이상 입력해주세요.';
+    if (value.trim().length > 20) return '이름은 20자 이하로 입력해주세요.';
+    return '';
+  },
+
+  // 이메일: 형식 체크
+  email: (value) => {
+    if (!value.trim()) return '이메일을 입력해주세요.';
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) return '올바른 이메일 형식이 아닙니다.';
+    return '';
+  },
+
+  // 메시지: 10자 이상 500자 이하
+  message: (value) => {
+    if (!value.trim()) return '메시지를 입력해주세요.';
+    if (value.trim().length < 10) return `메시지는 10자 이상 입력해주세요. (현재 ${value.trim().length}자)`;
+    if (value.trim().length > 500) return `메시지는 500자 이하로 입력해주세요. (현재 ${value.trim().length}자)`;
+    return '';
+  },
+};
+
+/* ---------- 유틸 함수 ---------- */
+
+// 에러 표시
+const showError = (input, errorEl, message) => {
+  input.classList.remove('input--success');
+  input.classList.add('input--error');
+  errorEl.textContent = message;
+};
+
+// 성공 표시
+const showSuccess = (input, errorEl) => {
+  input.classList.remove('input--error');
+  input.classList.add('input--success');
+  errorEl.textContent = '';
+};
+
+// 초기화
+const resetField = (input, errorEl) => {
+  input.classList.remove('input--error', 'input--success');
+  errorEl.textContent = '';
+};
+
+// 필드 하나 검사
+const validateField = (input, errorEl, validatorKey) => {
+  const error = validators[validatorKey](input.value);
+  if (error) {
+    showError(input, errorEl, error);
+    return false;
+  } else {
+    showSuccess(input, errorEl);
+    return true;
+  }
+};
+
+/* ---------- 실시간 검사 (blur: 포커스 벗어날 때) ---------- */
+nameInput.addEventListener('blur', () => {
+  validateField(nameInput, nameError, 'name');
+});
+
+emailInput.addEventListener('blur', () => {
+  validateField(emailInput, emailError, 'email');
+});
+
+messageInput.addEventListener('blur', () => {
+  validateField(messageInput, messageError, 'message');
+});
+
+/* ---------- 입력 중 에러 실시간 해제 ---------- */
+nameInput.addEventListener('input', () => {
+  if (nameInput.classList.contains('input--error')) {
+    validateField(nameInput, nameError, 'name');
+  }
+});
+
+emailInput.addEventListener('input', () => {
+  if (emailInput.classList.contains('input--error')) {
+    validateField(emailInput, emailError, 'email');
+  }
+});
+
+messageInput.addEventListener('input', () => {
+  // 메시지는 글자수도 실시간으로 보여주기
+  updateCharCount();
+  if (messageInput.classList.contains('input--error')) {
+    validateField(messageInput, messageError, 'message');
+  }
+});
+
+/* ---------- 글자수 카운터 ---------- */
+// HTML에 카운터 요소 동적 추가
+const charCount = document.createElement('span');
+charCount.className = 'char__count';
+charCount.textContent = '0 / 500';
+messageInput.parentElement.appendChild(charCount);
+
+const updateCharCount = () => {
+  const len = messageInput.value.trim().length;
+  charCount.textContent = `${len} / 500`;
+
+  // 500자 초과 시 빨간색
+  if (len > 500) {
+    charCount.classList.add('char__count--over');
+  } else {
+    charCount.classList.remove('char__count--over');
+  }
+};
+
+/* ---------- 폼 제출 ---------- */
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // 전체 검사
+  const isNameValid    = validateField(nameInput,    nameError,    'name');
+  const isEmailValid   = validateField(emailInput,   emailError,   'email');
+  const isMessageValid = validateField(messageInput, messageError, 'message');
+
+  // 하나라도 실패 시 중단
+  if (!isNameValid || !isEmailValid || !isMessageValid) {
+    // 첫 번째 에러 필드로 포커스
+    if (!isNameValid)         nameInput.focus();
+    else if (!isEmailValid)   emailInput.focus();
+    else                      messageInput.focus();
+    return;
+  }
+
+  // 전체 통과 → 성공 처리
+  handleFormSuccess();
+});
+
+/* ---------- 성공 처리 ---------- */
+const handleFormSuccess = () => {
+  // 버튼 로딩 상태
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  submitBtn.textContent = '전송 중...';
+  submitBtn.disabled = true;
+
+  // 실제 전송 시뮬레이션 (1.5초 후 성공)
+  setTimeout(() => {
+    // 폼 숨기고 성공 메시지 표시
+    contactForm.style.display = 'none';
+
+    const successMsg = document.createElement('div');
+    successMsg.className = 'form__success';
+    successMsg.innerHTML = `
+      <div class="success__icon">✅</div>
+      <h3>메시지가 전송되었습니다!</h3>
+      <p>빠른 시일 내에 답변 드리겠습니다 😊</p>
+      <button class="btn btn--outline" id="form-reset">다시 작성하기</button>
+    `;
+    contactForm.parentElement.appendChild(successMsg);
+
+    // 다시 작성하기 버튼
+    document.getElementById('form-reset').addEventListener('click', () => {
+      successMsg.remove();
+      contactForm.style.display = 'flex';
+      contactForm.reset();
+      submitBtn.textContent = '보내기';
+      submitBtn.disabled = false;
+      charCount.textContent = '0 / 500';
+
+      // 모든 필드 초기화
+      resetField(nameInput,    nameError);
+      resetField(emailInput,   emailError);
+      resetField(messageInput, messageError);
+    });
+
+  }, 1500);
+};
+
+
+
+
+
+
+
+
