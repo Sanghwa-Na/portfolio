@@ -283,7 +283,7 @@ const validateField = (input, errorEl, validatorKey) => {
     return true;
   }
 };
-
+ 
 /* ---------- 실시간 검사 (blur: 포커스 벗어날 때) ---------- */
 nameInput.addEventListener('blur', () => {
   validateField(nameInput, nameError, 'name');
