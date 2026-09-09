@@ -399,10 +399,76 @@ const handleFormSuccess = () => {
   }, 1500);
 };
 
+/* ===========================
+   7. 스크롤 애니메이션
+   (Intersection Observer)
+=========================== */
 
+/* ---------- 1) 일반 reveal ---------- */
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
 
+      entry.target.classList.add('revealed');
 
+      // 한 번 보이면 더 이상 감지 안 함
+      revealObserver.unobserve(entry.target);
+    });
+  },
+  {
+    threshold: 0.15,      // 15% 보이면 실행
+    rootMargin: '0px 0px -50px 0px', // 하단 50px 여유
+  }
+);
 
+// .reveal 요소 전부 등록
+document.querySelectorAll('.reveal').forEach((el) => {
+  revealObserver.observe(el);
+});
 
+/* ---------- 2) stagger (순서대로 등장) ---------- */
+// 같은 부모 안의 stagger 요소들에 딜레이 자동 부여
+document.querySelectorAll('.stagger').forEach((el, index) => {
+  // 형제 중 몇 번째인지 계산
+  const siblings = el.parentElement.querySelectorAll('.stagger');
+  const order    = Array.from(siblings).indexOf(el);
+  el.style.setProperty('--stagger-delay', `${order * 0.1}s`);
+});
 
+/* ---------- 3) 스킬바 애니메이션 ---------- */
+const skillObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
 
+      // 스킬바 fill 요소 찾아서 width 적용
+      const fills = entry.target.querySelectorAll('.skill__fill');
+      fills.forEach((fill) => {
+        const targetWidth = fill.style.getPropertyValue('--fill') 
+                         || fill.getAttribute('data-fill');
+        fill.style.width = targetWidth;
+      });
+
+      skillObserver.unobserve(entry.target);
+    });
+  },
+  { threshold: 0.3 }
+);
+
+// 스킬 섹션 등록
+const skillsSection = document.getElementById('skills');
+if (skillsSection) {
+  skillObserver.observe(skillsSection);
+}
+
+/* ---------- 4) 히어로 텍스트 등장 ---------- */
+// 페이지 로드 시 Hero 요소 순서대로 등장
+const heroElements = document.querySelectorAll(
+  '.hero__greeting, .hero__title, .hero__subtitle, .hero__btns'
+);
+
+heroElements.forEach((el, index) => {
+  el.style.animationDelay = `${index * 0.2}s`;
+  el.classList.add('hero__animate');
+});
