@@ -331,76 +331,6 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===========================
-   Projects
-=========================== */
-.projects__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.project__card {
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-
-.project__card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-}
-
-.project__img {
-  background: var(--color-bg-alt);
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-}
-
-.project__info {
-  padding: 1.5rem;
-}
-
-.project__title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.project__desc {
-  color: var(--color-text-light);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-}
-
-.project__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-
-.tag {
-  background: var(--color-bg-alt);
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
-  padding: 0.2rem 0.6rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.project__links {
-  display: flex;
-  gap: 0.5rem;
-}
-
-/* ===========================
    GitHub 섹션
 =========================== */
 
@@ -568,15 +498,6 @@ img { max-width: 100%; display: block; }
 
 .github__error span { font-size: 2.5rem; }
 .github__error p    { font-size: 1rem; }
-
-/* ===========================
-   반응형 (GitHub 섹션)
-=========================== */
-@media (max-width: 768px) {
-  .repos__grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* ===========================
    Contact
@@ -788,8 +709,6 @@ img { max-width: 100%; display: block; }
 @media (max-width: 480px) {
   .hero__title { font-size: 1.7rem; }
   .hero__btns { flex-direction: column; align-items: center; }
-  .projects__grid { grid-template-columns: 1fr; }
-  .skills__grid { grid-template-columns: 1fr 1fr; }
 }
 
 /* ===========================
