@@ -126,7 +126,7 @@ const createRepoCard = (repo) => {
   const updatedAt = new Date(repo.updated_at).toLocaleDateString('ko-KR');
 
   return `
-    <article class="repo__card">
+    <article class="repo__card reveal stagger">
       <div class="repo__header">
         <span class="repo__icon">📁</span>
         <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"
@@ -190,7 +190,7 @@ async function fetchGithubRepos() {
       <div class="github__profile">
         <a href="https://github.com/${GITHUB_USERNAME}"
            target="_blank" rel="noopener noreferrer"
-           class="github__profile-link">
+           class="github__profile-link reveal">
           🐙 @${GITHUB_USERNAME} GitHub 바로가기
         </a>
       </div>
@@ -198,6 +198,18 @@ async function fetchGithubRepos() {
         ${filtered.map(createRepoCard).join('')}
       </div>
     `;
+
+    // 동적 생성된 .reveal 요소들을 Intersection Observer에 등록
+    document.querySelectorAll('.github__profile-link.reveal, .repo__card.reveal').forEach((el) => {
+      revealObserver.observe(el);
+    });
+
+    // stagger 딜레이 설정
+    document.querySelectorAll('.repo__card.stagger').forEach((el) => {
+      const siblings = el.parentElement.querySelectorAll('.stagger');
+      const order    = Array.from(siblings).indexOf(el);
+      el.style.setProperty('--stagger-delay', `${order * 0.1}s`);
+    });
 
   } catch (error) {
     // 7) 에러 처리

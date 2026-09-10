@@ -432,7 +432,7 @@ img { max-width: 100%; display: block; }
 .repos__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.2rem;
+  gap: 1.5rem;
 }
 
 /* 레포 카드 */
@@ -451,7 +451,6 @@ img { max-width: 100%; display: block; }
 .repo__card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--color-primary);
 }
 
 /* 카드 헤더 */
