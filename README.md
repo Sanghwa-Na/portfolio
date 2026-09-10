@@ -50,7 +50,7 @@ portfolio/
 ├── css/
 │   └── style.css       # 전체 스타일
 ├── images/
-│   └── screenshots.png       # 스크린샷 사진들
+│   └── screenshots.png # 스크린샷 사진들
 ├── js/
 └── └── main.js         # 전체 스크립트
 
