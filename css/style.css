@@ -645,70 +645,113 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===========================
-   반응형 - 태블릿 (768px 이하)
+   Mobile-first 기본 스타일
+   - 작은 화면(모바일)에서 우선 적용되도록 기존 max-width 규칙을 기본으로 옮깁니다.
+   - 이후 min-width 미디어쿼리로 큰 화면(태블릿/데스크탑) 규칙을 복구합니다.
 =========================== */
-@media (max-width: 768px) {
 
-  /* 햄버거 표시 */
-  .nav__hamburger { display: block; }
+/* 모바일: 햄버거 표시, 모바일 메뉴 레이아웃 */
+.nav__hamburger { display: block; }
 
-  /* 모바일 메뉴 */
-  .nav__menu {
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    width: 100%;
-    flex-direction: column;
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
-    padding: 1rem 0;
-    gap: 0;
-    z-index: 900;
+.nav__menu {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  width: 100%;
+  flex-direction: column;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 0;
+  gap: 0;
+  z-index: 900;
 
-    /* 닫힌 상태 */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: none; /* ← 기본은 transition 없음 */
-  }
-
-  /* 열린 상태에서만 transition */
-  .nav__menu.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    transition: opacity var(--transition), transform var(--transition);
-  }
-
-  .nav__link {
-    display: block;
-    padding: 0.9rem 2rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .nav__link::after { display: none; }
-
-  /* Hero */
-  .hero__title { font-size: 2rem; }
-  .hero__subtitle { font-size: 1.1rem; }
-
-  /* About */
-  .about__content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  /* Section 패딩 */
-  .section { padding: 60px 0; }
-  .section__title { font-size: 1.6rem; }
+  /* 닫힌 상태 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: none;
 }
 
+.nav__menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.nav__link {
+  display: block;
+  padding: 0.9rem 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nav__link::after { display: none; }
+
+/* 모바일: Hero / About / Section 크기 조정 */
+.hero__title { font-size: 1.7rem; }
+.hero__subtitle { font-size: 1.1rem; }
+
+.about__content {
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.section { padding: 60px 0; }
+.section__title { font-size: 1.6rem; }
+
+/* 버튼 그룹 모바일 정렬 */
+.hero__btns { flex-direction: column; align-items: center; }
+
 /* ===========================
-   반응형 - 모바일 (480px 이하)
+   데스크탑/태블릿용 오버라이드 (min-width)
+   - 481px 이상: 작은 테블릿/가로모드
+   - 769px 이상: 데스크탑 레이아웃 복구
 =========================== */
-@media (max-width: 480px) {
-  .hero__title { font-size: 1.7rem; }
-  .hero__btns { flex-direction: column; align-items: center; }
+@media (min-width: 481px) {
+  /* 중간 크기에서 버튼은 가로 정렬(원래 동작) */
+  .hero__btns { flex-direction: row; justify-content: center; }
+  .hero__title { font-size: 2rem; }
+}
+
+@media (min-width: 769px) {
+  /* 햄버거 숨기고 데스크탑 메뉴 스타일 복구 */
+  .nav__hamburger { display: none; }
+
+  .nav__menu {
+    position: static;
+    width: auto;
+    flex-direction: row;
+    background: transparent;
+    border-bottom: none;
+    padding: 0;
+    gap: 2rem;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+    display: flex;
+  }
+
+  .nav__menu.open { transition: none; }
+
+  .nav__link {
+    display: inline-block;
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .nav__link::after { display: block; }
+
+  /* Hero 타이틀 원래 크기 복구 */
+  .hero__title { font-size: 3rem; }
+  .hero__subtitle { font-size: 1.3rem; }
+
+  /* About: 2열 레이아웃 */
+  .about__content { grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+  /* 섹션 패딩 원래 값 */
+  .section { padding: 80px 0; }
+  .section__title { font-size: 2rem; }
 }
 
 /* ===========================
