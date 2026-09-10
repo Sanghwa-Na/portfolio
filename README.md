@@ -19,7 +19,11 @@
 
 |  라이트 모드  |  다크 모드  |
 |:-----------:|:---------:|
-| ☀️ | 🌙 |
+| ![라이트 모드 미리보기](images/스크린샷 2026-09-10 오후 7.27.20.png) | ![다크 모드 미리보기](images/스크린샷 2026-09-10 오후 7.27.32.png) |
+
+|  모바일 화면  |
+|:-----------:|
+| ![모바일 화면 미리보기](images/스크린샷 2026-09-10 오후 7.25.50.png) |
 
 ---
 
@@ -90,4 +94,4 @@ portfolio/
 ## 📬 Contact
 
 - **GitHub**: [@Sanghwa-Na](https://github.com/Sanghwa-Na)
-- **Email**: your-email@example.com
+- **Email**: bdn980@gmail.com
