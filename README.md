@@ -23,7 +23,7 @@
 
 |  모바일 화면  |
 |:-----------:|
-| <img src="images/mobilemode.png" alt="모바일 화면 미리보기" width="420" height="560" /> |
+| <img src="images/mobilemode.png" alt="모바일 화면 미리보기" width="420" height="460" /> |
 
 ---
  
