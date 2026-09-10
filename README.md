@@ -19,11 +19,11 @@
 
 |  라이트 모드  |  다크 모드  |
 |:-----------:|:---------:|
-| <img src="images/light-mode.png" alt="라이트 모드 미리보기" width="420" height="760" /> | <img src="images/dark-mode.png" alt="다크 모드 미리보기" width="420" height="760" /> |
+| <img src="images/lightmode.png" alt="라이트 모드 미리보기" width="420" height="760" /> | <img src="images/darkmode.png" alt="다크 모드 미리보기" width="420" height="760" /> |
 
 |  모바일 화면  |
 |:-----------:|
-| <img src="images/mobile.png" alt="모바일 화면 미리보기" width="420" height="760" /> |
+| <img src="images/mobilemode.png" alt="모바일 화면 미리보기" width="420" height="760" /> |
 
 ---
  
