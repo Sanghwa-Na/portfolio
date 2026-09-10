@@ -8,30 +8,36 @@ const themeToggle = document.getElementById('theme-toggle');
 const navLinks    = document.querySelectorAll('.nav__link');
 const sections    = document.querySelectorAll('section[id]');
 
+// 중앙 상태 관리 객체 (간단한 UI 상태 분리)
+const state = {
+  menuOpen: false,
+};
+
+const setMenuOpen = (open) => {
+  state.menuOpen = !!open;
+  navMenu.classList.toggle('open', state.menuOpen);
+  hamburger.setAttribute('aria-label', state.menuOpen ? '메뉴 닫기' : '메뉴 열기');
+  hamburger.textContent = state.menuOpen ? '✕' : '☰';
+};
+
 /* ===========================
    2. 햄버거 메뉴
 =========================== */
 hamburger.addEventListener('click', () => {
-  const isOpen = navMenu.classList.toggle('open');
-  hamburger.setAttribute('aria-label', isOpen ? '메뉴 닫기' : '메뉴 열기');
-  hamburger.textContent = isOpen ? '✕' : '☰';
+  setMenuOpen(!state.menuOpen);
 });
 
 // 링크 클릭 시 메뉴 닫기
 navLinks.forEach(link => {
   link.addEventListener('click', () => {
-    navMenu.classList.remove('open');
-    hamburger.textContent = '☰';
-    hamburger.setAttribute('aria-label', '메뉴 열기');
+    setMenuOpen(false);
   });
 });
 
 // 메뉴 바깥 클릭 시 닫기
 document.addEventListener('click', (e) => {
   if (!header.contains(e.target)) {
-    navMenu.classList.remove('open');
-    hamburger.textContent = '☰';
-    hamburger.setAttribute('aria-label', '메뉴 열기');
+    setMenuOpen(false);
   }
 });
 
@@ -107,14 +113,24 @@ const createLoader = () => `
   </div>
 `;
 
-// 에러 메시지 HTML
+// 에러 메시지 HTML (버튼은 inline onclick 사용하지 않음)
 const createError = (msg) => `
   <div class="github__error">
     <span>⚠️</span>
     <p>${msg}</p>
-    <button class="btn btn--outline" onclick="fetchGithubRepos()">다시 시도</button>
+    <button class="btn btn--outline" id="github-retry">다시 시도</button>
   </div>
 `;
+
+// 에러 UI의 재시도 버튼에 이벤트 바인딩
+const bindGithubRetry = () => {
+  const retryBtn = document.getElementById('github-retry');
+  if (retryBtn) {
+    // 중복 바인딩 방지
+    retryBtn.removeEventListener('click', fetchGithubRepos);
+    retryBtn.addEventListener('click', fetchGithubRepos);
+  }
+};
 
 // 레포 카드 1개 HTML
 const createRepoCard = (repo) => {
@@ -178,6 +194,7 @@ async function fetchGithubRepos() {
     // 5) 레포가 없을 때
     if (repos.length === 0) {
       container.innerHTML = createError('공개된 레포지토리가 없습니다.');
+      bindGithubRetry();
       return;
     }
 
@@ -215,6 +232,7 @@ async function fetchGithubRepos() {
     // 7) 에러 처리
     console.error('GitHub API 오류:', error);
     container.innerHTML = createError(error.message);
+    bindGithubRetry();
   }
 }
 
