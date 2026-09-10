@@ -42,18 +42,27 @@ document.addEventListener('click', (e) => {
 });
 
 /* ===========================
-   3. 다크모드
+   3. 다크모드 (상태 분리)
+   - state.theme으로 관리하고 setTheme()으로 렌더와 상태 변경 분리
 =========================== */
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', savedTheme);
-themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+// 초기 테마 (localStorage 우선)
+const initialTheme = localStorage.getItem('theme') || 'light';
+state.theme = initialTheme;
 
-themeToggle.addEventListener('click', () => {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next    = current === 'dark' ? 'light' : 'dark';
+const setTheme = (next) => {
+  state.theme = next;
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
   themeToggle.textContent = next === 'dark' ? '☀️' : '🌙';
+};
+
+// 초기 적용
+setTheme(state.theme);
+
+// 토글 이벤트는 상태 변경만 담당
+themeToggle.addEventListener('click', () => {
+  const next = state.theme === 'dark' ? 'light' : 'dark';
+  setTheme(next);
 });
 
 /* ===========================

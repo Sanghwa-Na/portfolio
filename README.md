@@ -39,6 +39,11 @@
 | ✨ 스크롤 애니메이션 | Intersection Observer 기반 |
 | ♿ 접근성 | prefers-reduced-motion 지원 |
 
+## 설계 방향
+
+- 모바일 우선(Mobile-first) 접근을 지향합니다. 현재 레이아웃은 모바일에서 기본 동작을 확인할 수 있도록 설계되었으며, 화면이 넓어질 때(min-width)를 기준으로 확장하는 방식을 권장합니다. 향후 CSS를 mobile-first로 리팩터링하여 미디어 쿼리를 `min-width` 기준으로 정리할 예정입니다.
+
+
 ---
 
 ## 🗂️ 폴더 구조
