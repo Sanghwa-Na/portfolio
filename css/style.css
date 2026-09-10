@@ -712,6 +712,49 @@ img { max-width: 100%; display: block; }
 }
 
 /* ===========================
+   Floating feedback / back-to-top button
+   오른쪽 하단 고정 버튼
+=========================== */
+.floating-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1200;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  pointer-events: none; /* 보이지 않을 때 클릭 방지 */
+}
+
+.floating-btn.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.floating-btn:focus {
+  outline: 3px solid rgba(255,255,255,0.14);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .floating-btn { right: 12px; bottom: 12px; font-size: 0.85rem; padding: 0.55rem 0.9rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-btn { transition: none; }
+}
+
+/* ===========================
     스크롤 애니메이션
 =========================== */
 

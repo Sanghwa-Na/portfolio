@@ -89,9 +89,49 @@ const onScroll = () => {
       link.classList.add('active');
     }
   });
+
+  // 오른쪽 하단 플로팅 버튼 보이기/숨기기
+  const floatingBtn = document.getElementById('floating-feedback');
+  if (floatingBtn) {
+    // 스크롤이 충분히 내려가면 표시 (예: 400px)
+    floatingBtn.classList.toggle('visible', window.scrollY > 400);
+  }
 };
 
 window.addEventListener('scroll', onScroll, { passive: true });
+
+/* ===========================
+   8. 플로팅 버튼 동작: 클릭하면 맨위로 이동
+   - 접근성: prefers-reduced-motion을 존중
+=========================== */
+const initFloatingButton = () => {
+  const btn = document.getElementById('floating-feedback');
+  if (!btn) return;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const goTop = (e) => {
+    e.preventDefault();
+    if (reduced) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  btn.addEventListener('click', goTop);
+
+  // 키보드 접근성: Enter / Space 처리
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      goTop(e);
+    }
+  });
+};
+
+// 초기화 호출 (스크립트가 바디 끝에서 로드되므로 바로 호출 가능)
+initFloatingButton();
 
 /* ===========================
    5. GitHub API 연동
